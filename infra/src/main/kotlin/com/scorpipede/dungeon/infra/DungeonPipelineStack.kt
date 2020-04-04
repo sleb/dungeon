@@ -30,17 +30,10 @@ class DungeonPipelineStack(scope: Construct?, lambdaCode: CfnParametersCode, lam
                                 "cd infra",
                                 "./gradlew -q run"
                             )
-                        ),
-                        "post_build" to mapOf(
-                            "commands" to listOf(
-                                "ls -la",
-                                "ls -la cdkout",
-                                "cat cdkout/DungeonLambdaStack.template.json"
-                            )
                         )
                     ),
                     "artifacts" to mapOf(
-                        "base-directory" to "cdkout",
+                        "base-directory" to "infra/cdkout",
                         "files" to listOf("DungeonLambdaStack.template.json")
                     )
                 )
@@ -62,7 +55,7 @@ class DungeonPipelineStack(scope: Construct?, lambdaCode: CfnParametersCode, lam
                         )
                     ),
                     "artifacts" to mapOf(
-                        "base-directory" to "build/libs",
+                        "base-directory" to "lambda/build/libs",
                         "files" to listOf("lambda-all.jar")
                     )
                 )
