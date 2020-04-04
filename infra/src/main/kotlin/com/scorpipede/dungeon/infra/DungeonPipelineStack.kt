@@ -15,11 +15,47 @@ import software.amazon.awscdk.services.lambda.CfnParametersCode
 
 class DungeonPipelineStack(scope: Construct?, lambdaCode: CfnParametersCode, lambdaStackId: String) : Stack(scope, "DungeonPipelineStack") {
     val cdkBuild = PipelineProject.Builder.create(this, "CdkBuild")
-        .buildSpec(BuildSpec.fromSourceFilename("cdk_build.yml"))
+        .buildSpec(
+            BuildSpec.fromObject(
+                mapOf(
+                    "version" to "0.2",
+                    "phases" to mapOf<String, Any>(
+                        "build" to mapOf<String, Any>(
+                            "commands" to listOf(
+                                "cd infra",
+                                "./gradlew -q run"
+                            )
+                        )
+                    ),
+                    "artifacts" to mapOf(
+                        "base-directory" to "cdk.out",
+                        "files" to listOf("DungeonStack.template.json")
+                    )
+                )
+            )
+        )
         .build()
 
     val codeBuild = PipelineProject.Builder.create(this, "CodeBuild")
-        .buildSpec(BuildSpec.fromSourceFilename("code_build.yml"))
+        .buildSpec(
+            BuildSpec.fromObject(
+                mapOf(
+                    "version" to "0.2",
+                    "phases" to mapOf<String, Any>(
+                        "build" to mapOf<String, Any>(
+                            "commands" to listOf(
+                                "cd lambda",
+                                "./gradlew -q build"
+                            ),
+                            "artifacts" to mapOf(
+                                "base-directory" to "build/distributions",
+                                "files" to listOf("infra.zip")
+                            )
+                        )
+                    )
+                )
+            )
+        )
         .build()
 
     val sourceArtifact = Artifact.artifact("src")
