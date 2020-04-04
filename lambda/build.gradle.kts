@@ -3,10 +3,8 @@ import com.scorpipede.dungeon.BuildVersions.slf4j
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
 plugins {
-    // Apply the Kotlin JVM plugin to add support for Kotlin.
     kotlin("jvm") version "1.3.70"
-
-    // Apply the java-library plugin for API and implementation separation.
+    id("com.github.johnrengelman.shadow") version "5.2.0"
     `java-library`
 }
 

@@ -19,17 +19,29 @@ class DungeonPipelineStack(scope: Construct?, lambdaCode: CfnParametersCode, lam
             BuildSpec.fromObject(
                 mapOf(
                     "version" to "0.2",
-                    "phases" to mapOf<String, Any>(
-                        "build" to mapOf<String, Any>(
+                    "env" to mapOf(
+                        "variables" to mapOf(
+                            "CDK_OUTDIR" to "cdkout"
+                        )
+                    ),
+                    "phases" to mapOf(
+                        "build" to mapOf(
                             "commands" to listOf(
                                 "cd infra",
                                 "./gradlew -q run"
                             )
+                        ),
+                        "post_build" to mapOf(
+                            "commands" to listOf(
+                                "ls -la",
+                                "ls -la cdkout",
+                                "cat cdkout/DungeonLambdaStack.template.json"
+                            )
                         )
                     ),
                     "artifacts" to mapOf(
-                        "base-directory" to "cdk.out",
-                        "files" to listOf("DungeonStack.template.json")
+                        "base-directory" to "cdkout",
+                        "files" to listOf("DungeonLambdaStack.template.json")
                     )
                 )
             )
@@ -41,17 +53,17 @@ class DungeonPipelineStack(scope: Construct?, lambdaCode: CfnParametersCode, lam
             BuildSpec.fromObject(
                 mapOf(
                     "version" to "0.2",
-                    "phases" to mapOf<String, Any>(
-                        "build" to mapOf<String, Any>(
+                    "phases" to mapOf(
+                        "build" to mapOf(
                             "commands" to listOf(
                                 "cd lambda",
                                 "./gradlew -q build"
-                            ),
-                            "artifacts" to mapOf(
-                                "base-directory" to "build/distributions",
-                                "files" to listOf("infra.zip")
                             )
                         )
+                    ),
+                    "artifacts" to mapOf(
+                        "base-directory" to "build/distributions",
+                        "files" to listOf("infra.zip")
                     )
                 )
             )
