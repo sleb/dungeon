@@ -1,0 +1,10 @@
+version: "0.2"
+phases:
+  build:
+    commands:
+      - "cd infra"
+      - "./gradlew -q run"
+artifacts:
+  "base-directory": "cdk.out"
+  files:
+  - "DungeonStack.template.json"
