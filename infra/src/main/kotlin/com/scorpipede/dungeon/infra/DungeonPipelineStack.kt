@@ -14,7 +14,7 @@ import software.amazon.awscdk.services.codepipeline.actions.GitHubSourceAction
 import software.amazon.awscdk.services.lambda.CfnParametersCode
 
 class DungeonPipelineStack(scope: Construct?, lambdaCode: CfnParametersCode, lambdaStackId: String) : Stack(scope, "DungeonPipelineStack") {
-    val cdkBuild = PipelineProject.Builder.create(this, "CdkBuild")
+    private val cdkBuild: PipelineProject = PipelineProject.Builder.create(this, "CdkBuild")
         .buildSpec(
             BuildSpec.fromObject(
                 mapOf(
@@ -36,7 +36,7 @@ class DungeonPipelineStack(scope: Construct?, lambdaCode: CfnParametersCode, lam
         )
         .build()
 
-    val codeBuild = PipelineProject.Builder.create(this, "CodeBuild")
+    private val codeBuild: PipelineProject = PipelineProject.Builder.create(this, "CodeBuild")
         .buildSpec(
             BuildSpec.fromObject(
                 mapOf(
@@ -58,11 +58,11 @@ class DungeonPipelineStack(scope: Construct?, lambdaCode: CfnParametersCode, lam
         )
         .build()
 
-    val sourceArtifact = Artifact.artifact("src")
+    private val sourceArtifact = Artifact.artifact("src")
+    private val cdkArtifact = Artifact.artifact("cdk")
+    private val buildArtifact = Artifact.artifact("zip")
 
-    val cdkArtifact = Artifact.artifact("cdk")
-    val buildArtifact = Artifact.artifact("zip")
-    val pipeline = Pipeline.Builder.create(this, "DungeonPipeline")
+    private val pipeline: Pipeline = Pipeline.Builder.create(this, "DungeonPipeline")
         .pipelineName("DungeonPipeline")
         .stages(
             listOf(
