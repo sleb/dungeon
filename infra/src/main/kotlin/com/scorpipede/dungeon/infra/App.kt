@@ -4,7 +4,6 @@
 package com.scorpipede.dungeon.infra
 
 import software.amazon.awscdk.core.App
-import software.amazon.awscdk.core.AppProps
 
 fun main(args: Array<String>) {
     val app = App()

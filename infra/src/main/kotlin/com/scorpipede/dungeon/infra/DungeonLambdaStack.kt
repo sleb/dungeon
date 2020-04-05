@@ -14,19 +14,19 @@ import java.time.Instant
 class DungeonLambdaStack(scope: Construct?, id: String) : Stack(scope, id) {
     var lambdaCode: CfnParametersCode = CfnParametersCode.fromCfnParameters()
 
-    val func = Function.Builder.create(this, "DungeonLambda")
+    private val func: Function = Function.Builder.create(this, "DungeonLambda")
         .code(lambdaCode)
         .handler("com.scorpipede.dungeon.lambda.DungeonStreamHandler")
         .runtime(Runtime.JAVA_11)
         .build()
 
-    val version = func.addVersion(Instant.now().toString())
-    val alias = Alias.Builder.create(this, "LambdaAlias")
+    private val version = func.addVersion(Instant.now().toString())
+    private val alias: Alias = Alias.Builder.create(this, "LambdaAlias")
         .aliasName("LambdaAlias")
         .version(version)
         .build()
 
-    val deploymentGroup = LambdaDeploymentGroup.Builder.create(this, "DeploymentGroup")
+    private val deploymentGroup: LambdaDeploymentGroup = LambdaDeploymentGroup.Builder.create(this, "DeploymentGroup")
         .alias(alias)
         .deploymentConfig(LambdaDeploymentConfig.ALL_AT_ONCE)
         .build();

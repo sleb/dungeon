@@ -19,21 +19,16 @@ class DungeonPipelineStack(scope: Construct?, lambdaCode: CfnParametersCode, lam
             BuildSpec.fromObject(
                 mapOf(
                     "version" to "0.2",
-                    "env" to mapOf(
-                        "variables" to mapOf(
-                            "CDK_OUTDIR" to "cdkout"
-                        )
-                    ),
                     "phases" to mapOf(
                         "build" to mapOf(
                             "commands" to listOf(
                                 "cd infra",
-                                "./gradlew -q run"
+                                "npx aws-cdk synth"
                             )
                         )
                     ),
                     "artifacts" to mapOf(
-                        "base-directory" to "infra/cdkout",
+                        "base-directory" to "infra/cdk.out",
                         "files" to listOf("DungeonLambdaStack.template.json")
                     )
                 )
