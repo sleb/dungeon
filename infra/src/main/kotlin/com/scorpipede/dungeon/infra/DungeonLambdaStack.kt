@@ -16,7 +16,7 @@ class DungeonLambdaStack(scope: Construct?, id: String) : Stack(scope, id) {
 
     val func = Function.Builder.create(this, "DungeonLambda")
         .code(lambdaCode)
-        .handler("com.scorpipede.dungeon.lambda.LaunchRequestHandler")
+        .handler("com.scorpipede.dungeon.lambda.DungeonStreamHandler")
         .runtime(Runtime.JAVA_11)
         .build()
 
