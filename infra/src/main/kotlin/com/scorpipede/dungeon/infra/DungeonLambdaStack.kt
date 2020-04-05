@@ -28,6 +28,6 @@ class DungeonLambdaStack(scope: Construct?, id: String) : Stack(scope, id) {
 
     val deploymentGroup = LambdaDeploymentGroup.Builder.create(this, "DeploymentGroup")
         .alias(alias)
-        .deploymentConfig(LambdaDeploymentConfig.LINEAR_10_PERCENT_EVERY_1_MINUTE)
+        .deploymentConfig(LambdaDeploymentConfig.ALL_AT_ONCE)
         .build();
 }
