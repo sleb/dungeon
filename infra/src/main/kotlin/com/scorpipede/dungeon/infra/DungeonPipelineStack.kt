@@ -45,7 +45,7 @@ class DungeonPipelineStack(scope: Construct?, lambdaCode: CfnParametersCode, lam
                         "build" to mapOf(
                             "commands" to listOf(
                                 "cd lambda",
-                                "./gradlew -q shadowJar"
+                                "./gradlew -q buildZip"
                             )
                         )
                     ),
