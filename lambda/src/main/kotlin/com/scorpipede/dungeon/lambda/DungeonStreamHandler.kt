@@ -11,6 +11,7 @@ class DungeonStreamHandler : SkillStreamHandler(skill) {
     companion object {
         val skill: Skill = Skills.standard()
             .addRequestHandlers(LaunchRequestHandler())
+            .withSkillId("amzn1.ask.skill.987654321")
             .build()
     }
 }
