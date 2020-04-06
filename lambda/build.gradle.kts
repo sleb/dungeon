@@ -5,6 +5,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 plugins {
     kotlin("jvm") version "1.3.70"
     `java-library`
+    distribution
 }
 
 repositories {
@@ -39,11 +40,14 @@ tasks {
     }
 }
 
-tasks.register<Zip>("buildZip") {
-    from(tasks.compileKotlin)
-    from(tasks.processResources)
-    into("lib") {
-        from(configurations.runtimeClasspath)
+distributions {
+    main {
+        contents {
+            from(tasks.compileKotlin)
+            from(tasks.processResources)
+            into("lib") {
+                from(configurations.runtimeClasspath)
+            }
+        }
     }
 }
-
