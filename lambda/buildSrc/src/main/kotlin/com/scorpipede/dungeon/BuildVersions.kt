@@ -1,6 +1,7 @@
 package com.scorpipede.dungeon
 
 object BuildVersions {
-    val alexaSdk = "2.30.+"
-    val slf4j = "1.7.+"
+    const val alexaSdk = "2.30.+"
+    const val kotlinLogging = "1.7.+"
+    const val lambdaLogging = "1.1.0"
 }

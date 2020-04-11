@@ -10,7 +10,7 @@
     },
     "loggers": {
       "root": {
-        "level": "warn",
+        "level": "debug",
         "AppenderRef": {
           "ref": "Lambda"
         }

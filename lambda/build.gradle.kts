@@ -1,4 +1,6 @@
 import com.scorpipede.dungeon.BuildVersions.alexaSdk
+import com.scorpipede.dungeon.BuildVersions.kotlinLogging
+import com.scorpipede.dungeon.BuildVersions.lambdaLogging
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -22,8 +24,9 @@ dependencies {
     implementation("com.amazon.alexa:ask-sdk:$alexaSdk")
     implementation("com.amazon.alexa:ask-sdk-core:$alexaSdk")
     implementation("com.amazon.alexa:ask-sdk-lambda-support:$alexaSdk")
+    implementation("io.github.microutils:kotlin-logging:$kotlinLogging")
 
-    implementation("com.amazonaws:aws-lambda-java-log4j2:1.1.0")
+    runtimeOnly("com.amazonaws:aws-lambda-java-log4j2:$lambdaLogging")
 
     // Use the Kotlin test library.
     testImplementation(kotlin("test"))
