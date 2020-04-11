@@ -10,25 +10,21 @@ import com.amazon.ask.request.interceptor.GenericRequestInterceptor
 import org.apache.logging.log4j.Level
 import org.apache.logging.log4j.core.config.Configurator
 import org.apache.logging.log4j.core.config.builder.api.ConfigurationBuilderFactory
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 class DungeonStreamHandler : SkillStreamHandler(skill) {
-    init {
-        println("initializing logging...")
-        val configurationBuilder = ConfigurationBuilderFactory.newConfigurationBuilder()
-        configurationBuilder.add(configurationBuilder.newRootLogger(Level.DEBUG))
-        Configurator.initialize(configurationBuilder.build())
-    }
     companion object {
         val skill: Skill = Skills.standard()
             .addRequestHandlers(LaunchRequestHandler())
             .addRequestInterceptor(object: GenericRequestInterceptor<HandlerInput> {
                 override fun process(input: HandlerInput?) {
-                    println(input?.requestEnvelopeJson)
-                    super.process(input)
+                    log.debug("request: {}", input?.requestEnvelopeJson)
                 }
             })
             .withSkillId("amzn1.ask.skill.987654321")
             .build()
-    }
 
+        val log: Logger = LoggerFactory.getLogger(DungeonStreamHandler::class.java)
+    }
 }
