@@ -18,6 +18,7 @@ class DungeonLambdaStack(scope: Construct?, id: String) : Stack(scope, id) {
         .code(lambdaCode)
         .handler("com.scorpipede.dungeon.lambda.DungeonStreamHandler")
         .runtime(Runtime.JAVA_11)
+        .memorySize(512)
         .build()
 
     private val version = func.addVersion(Instant.now().toString())

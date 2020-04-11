@@ -1,11 +1,10 @@
 import com.scorpipede.dungeon.BuildVersions.alexaSdk
-import com.scorpipede.dungeon.BuildVersions.slf4j
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.3.70"
     `java-library`
-    distribution
 }
 
 repositories {
@@ -23,7 +22,7 @@ dependencies {
     implementation("com.amazon.alexa:ask-sdk-core:$alexaSdk")
     implementation("com.amazon.alexa:ask-sdk-lambda-support:$alexaSdk")
 
-    runtimeOnly("org.slf4j:slf4j-simple:$slf4j")
+    implementation("com.amazonaws:aws-lambda-java-log4j2:1.1.0")
 
     // Use the Kotlin test library.
     testImplementation(kotlin("test"))
@@ -38,16 +37,18 @@ tasks {
             events = setOf(PASSED, SKIPPED, FAILED)
         }
     }
+
+    withType<KotlinCompile>().configureEach{
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
 }
 
-distributions {
-    main {
-        contents {
-            from(tasks.compileKotlin)
-            from(tasks.processResources)
-            into("lib") {
-                from(configurations.runtimeClasspath)
-            }
-        }
+tasks.register<Zip>("buildZip") {
+    from(tasks.compileKotlin)
+    from(tasks.processResources)
+    into("lib") {
+        from(configurations.runtimeClasspath)
     }
 }
