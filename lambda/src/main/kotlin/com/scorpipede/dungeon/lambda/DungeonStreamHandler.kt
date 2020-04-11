@@ -12,7 +12,7 @@ private val log = KotlinLogging.logger {}
 class DungeonStreamHandler : SkillStreamHandler(skill) {
     companion object {
         val skill: Skill = Skills.standard()
-            .addRequestHandlers(LaunchRequestHandler())
+            .addRequestHandlers(LaunchHandler())
             .addRequestInterceptor(object : GenericRequestInterceptor<HandlerInput> {
                 override fun process(input: HandlerInput?) =
                     log.debug { "request: ${input?.requestEnvelopeJson}" }
