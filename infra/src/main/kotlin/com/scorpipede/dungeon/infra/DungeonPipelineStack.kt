@@ -45,13 +45,13 @@ class DungeonPipelineStack(scope: Construct?, lambdaCode: CfnParametersCode, lam
                         "build" to mapOf(
                             "commands" to listOf(
                                 "cd lambda",
-                                "./gradlew -q buildZip"
+                                "./gradlew -q installDist"
                             )
                         )
                     ),
                     "artifacts" to mapOf(
-                        "base-directory" to "lambda/build/distributions",
-                        "files" to listOf("lambda.zip")
+                        "base-directory" to "lambda/build/install/lambda",
+                        "files" to listOf("**/*")
                     )
                 )
             )
