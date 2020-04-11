@@ -1,0 +1,20 @@
+{
+  "configuration": {
+    "appenders": {
+      "Lambda": {
+        "name": "Lambda",
+        "PatternLayout": {
+          "pattern": "%d{yyyy-MM-dd HH:mm:ss} %X{AWSRequestId} %-5p %c{1} - %m%n"
+        }
+      }
+    },
+    "loggers": {
+      "root": {
+        "level": "warn",
+        "AppenderRef": {
+          "ref": "Lambda"
+        }
+      }
+    }
+  }
+}
